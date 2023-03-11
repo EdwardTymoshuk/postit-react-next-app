@@ -1,6 +1,7 @@
 import './globals.css'
 import Nav from './auth/Nav'
 import {Roboto} from '@next/font/google'
+import QueryWrapper from '../app/auth/QueryWrapper'
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -13,15 +14,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      {/*
-        <head /> will contain the components returned by the nearest parent
-        head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
-      */}
       <head />
       <body className={`mx-4 md:mx-48 xl:mx-96 ${roboto.variable} bg-gray-20`}>
-        <Nav />
-        {children}
-        </body>
+        <QueryWrapper>
+          <Nav />
+          {children}
+          </QueryWrapper>
+      </body>
     </html>
   )
 }
