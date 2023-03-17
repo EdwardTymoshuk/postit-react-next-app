@@ -20,20 +20,25 @@ export default async function handler (
         })
 
         //check title
-        title.length > 300 && res.status(403).json({message: "Please write a shorter post."})
-        !title.length && res.status(403).json({message: "Please don't leave it empty."})
-
-        //create post
-        try{
+        if (title.length > 300) {
+            res.status(403).json({message: "Please write a shorter post."})
+        } else if (!title.length ) {
+            res.status(403).json({message: "Please don't leave it empty."}) 
+        } else {
+          //create post
+          try {
             const result = await prisma.post.create({
-                data: {
-                    title,
-                    userId: prismaUser.id
-                }
+              data: {
+                title,
+                userId: prismaUser.id,
+              },
             })
             res.status(200).json(result)
-        } catch (err){
-            res.status(403).json({err: "Error was occured whilst maling a post."})
+          } catch (err) {
+            res
+              .status(403)
+              .json({ err: "Error was occured whilst maling a post." })
+          }
         }
     }
 }
