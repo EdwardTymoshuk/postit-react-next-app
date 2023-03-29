@@ -13,20 +13,21 @@ export default function AddPost() {
   let toastPostId: string
 
   //create a post
-  const {mutate} = useMutation(
-    async (title: string) => await axios.post('/api/posts/addPost', {title}), 
+  const { mutate } = useMutation(
+    async (title: string) => await axios.post("/api/posts/addPost", { title }),
     {
       onError: (error) => {
-      error instanceof AxiosError && toast.error(error?.response?.data.message, {id: toastPostId})
-      setIsDisabled(false) 
-    },
-    onSuccess: (data) => {
-      toast.success('Post has been added!', {id: toastPostId})
-      queryClient.invalidateQueries(['posts'])
-      setTitle('')
-      setIsDisabled(false)  
+        error instanceof AxiosError &&
+          toast.error(error?.response?.data.message, { id: toastPostId })
+        setIsDisabled(false)
+      },
+      onSuccess: (data) => {
+        toast.success("Post has been added!", { id: toastPostId })
+        queryClient.invalidateQueries(["posts"])
+        setTitle("")
+        setIsDisabled(false)
+      },
     }
-  }
   )
 
   const submitPost = async (e: React.FormEvent) => {
