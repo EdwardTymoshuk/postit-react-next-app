@@ -11,6 +11,9 @@ export const authOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
+  authorization: {
+    params: { prompt: "login" }
+  }
 }
 
 export default NextAuth(authOptions) 
