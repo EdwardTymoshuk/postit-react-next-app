@@ -3,8 +3,10 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
-import { useState } from 'react'
-import { EventType } from 'next-auth'
+import { useEffect, useState } from 'react'
+import axios, { AxiosError } from 'axios'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { toast } from 'react-hot-toast'
 
 type PostType = {
   id: string,
@@ -16,16 +18,63 @@ type PostType = {
     id: string,
     postId: string,
     userId: string
-}[]
+}[],
+likes: [],
+loginedUserId: string
 }
 
-export default function Post({id, name, avatar, postTitle, comments}:PostType) {
+export default function Post({id, name, avatar, postTitle, comments, likes, loginedUserId}:PostType) {
   const [likesCounter, setLikesCounter] = useState(0)
+  const [isLikedSuccess, setIsLikedSuccess] = useState(false)
+  const queryClient = useQueryClient()
 
-  const setLike = (e:React.FormEvent) => {
+  useEffect(() => {
+    const fetchLoginedUser = async () => {
+      const response = await axios.get('/api/auth/getLoginedUser')
+      if (response.status === 200) {
+        console.log('200')
+      } else {
+        console.log('400')
+      }
+      
+    }
+    const loginedUserId = fetchLoginedUser()
+    console.log(loginedUserId)
+  },[])
+
+  useEffect(() => {
+    setLikesCounter(likes.length)
+    likes.forEach(value => {
+      !!loginedUserId && value.userId === loginedUserId && setIsLikedSuccess(true)
+    })
+    console.log('2 useef')
+  }, [likes])
+
+  let toastPostId: string
+
+  //create a post
+  const { mutate } = useMutation(
+    async () => await axios.post("/api/posts/addLike", {id}),
+    {
+      onError: (error) => {
+        error instanceof AxiosError &&
+          toast.error(error?.response?.data.message, { id: toastPostId })
+      },
+      onSuccess: (data) => {
+        toast.success("Like has been added!", { id: toastPostId })
+        queryClient.invalidateQueries(["posts"])
+        setIsLikedSuccess(true)
+      },
+    }
+  )
+
+
+  const addLike = async (e: React.FormEvent) => {
     e.preventDefault()
-    setLikesCounter(+1)
+    toastPostId = toast.loading('Your like is adding...', {id: toastPostId})
+    mutate(likes)
   }
+  
   
     return (
       <div className="bg-white my-8 p-8 rounded-lg">
@@ -48,7 +97,7 @@ export default function Post({id, name, avatar, postTitle, comments}:PostType) {
               {comments?.length} Comments
             </p>
           </Link>
-          <button onClick={setLike} className="flex items-center"><AiOutlineHeart />{likesCounter}</button>
+          <button onClick={addLike} className="flex items-center">{!isLikedSuccess ? <AiOutlineHeart /> : <AiFillHeart color="red"/>}{likesCounter}</button>
         </div>
       </div>
     )

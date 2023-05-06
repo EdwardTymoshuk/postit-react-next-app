@@ -19,7 +19,6 @@ export default function EditPost({avatar, name, title, comments, id}: EditProps)
         async (id:string) => await axios.delete('/api/posts/deletePost', {data: id}),
         {
             onError: error => {
-                console.log(error)
                 toast.error('Something went wrong while deleting this post.', {id: deleteToastId})
             },
             onSuccess: data => {

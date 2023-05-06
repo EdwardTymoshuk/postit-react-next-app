@@ -5,10 +5,15 @@ import axios from 'axios'
 import { useQuery } from '@tanstack/react-query'
 import Post from './components/Post'
 import {PostType} from './types/Posts'
+import Link from 'next/link'
+
 
 const allPosts = async () => {
   const response = await axios.get('api/posts/getPosts')
-  return response.data
+  // const loginedUserId = await axios.get('api/auth/getLoginedUser')
+  const loginedUserId = 'asdasdasdasd'
+  const data = response.data.map(el => Object.assign(el, {'loginedUserId': loginedUserId.data}))
+  return data
 }
 
 export default function Home() {
@@ -16,9 +21,9 @@ export default function Home() {
     queryFn: allPosts,
     queryKey: ['posts']
   })
-if (error) return error
+
 if (isLoading) return 'Loading...'
- 
+
   return (
     <main>
       <AddPost />
@@ -29,9 +34,11 @@ if (isLoading) return 'Loading...'
           avatar={post.user.image}
           postTitle={post.title}
           id={post.id}
-          comments={post.comments }
+          comments={post.comments}
+          likes={post.likes}
+          loginedUserId={post.loginedUserId}
         />
       ))}
     </main>
   )
-}
+      }

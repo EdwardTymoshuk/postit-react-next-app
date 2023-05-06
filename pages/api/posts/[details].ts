@@ -20,7 +20,8 @@ export default async function handler (
                         include: {
                             user: true
                         }
-                    }
+                    },
+                    likes: true
                 }
             })
             return res.status(200).json(data)

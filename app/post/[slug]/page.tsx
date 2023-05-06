@@ -11,7 +11,8 @@ import Image from "next/image"
 
 const fetchDetails = async (slug:string) => {
     const response = await axios.get(`/api/posts/${slug}`)
-    return response.data
+    const loginedUserId = await axios.get('/api/auth/getLoginedUser')
+    return Object.assign(response.data, {'loginedUserId': loginedUserId.data})
 }
 
 export default function PostDetail(url:UrlProps) {
@@ -28,6 +29,8 @@ export default function PostDetail(url:UrlProps) {
           avatar={data?.user.image}
           postTitle={data?.title}
           comments={data?.comments}
+          likes={data?.likes}
+          loginedUserId={data?.loginedUserId}
         />
         <AddComment id={data?.id} /> 
         {data?.comments?.map(comment => (

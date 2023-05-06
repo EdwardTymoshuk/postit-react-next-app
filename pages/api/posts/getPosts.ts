@@ -1,8 +1,8 @@
 import type {NextApiRequest, NextApiResponse} from 'next'
 import {getServerSession} from 'next-auth/next'
 import {authOptions} from '../auth/[...nextauth]'
-import prisma from '../../../prisma/client'
-
+import prisma from '../../../prisma/client' 
+import axios from 'axios'
 export default async function handler (
     req: NextApiRequest,
     res: NextApiResponse
@@ -13,7 +13,8 @@ export default async function handler (
             const data = await prisma.post.findMany({
                 include: {
                     user: true,
-                    comments: true
+                    comments: true,
+                    likes: true
                 },
                 orderBy: {
                     createdAt: "desc"
