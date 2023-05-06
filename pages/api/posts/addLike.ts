@@ -11,7 +11,7 @@ export default async function handler (
         const session = await getServerSession(req, res, authOptions)
         const postId = req.body.id
 
-        if (!session) return res.status(401).json({message: "Please sign in."})
+        if (!session) return res.status(401).json({message: "Please sign in to like a post."})
         //Get a user
         const prismaUser = await prisma.user.findUnique({
             where:{ 

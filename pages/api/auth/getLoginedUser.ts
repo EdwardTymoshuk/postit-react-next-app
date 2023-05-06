@@ -9,7 +9,7 @@ export default async function handler (
 ) {
     if (req.method === 'GET') {
         const session = await getServerSession(req, res, authOptions)
-        // if (!session) return res.status(401).json({message: "Please sign in."})
+        if (!session) return res.json('')
         //fetch all posts
         try{
             const prismaUser = await prisma.user.findUnique({

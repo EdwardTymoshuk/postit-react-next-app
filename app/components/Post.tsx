@@ -18,29 +18,20 @@ type PostType = {
     id: string,
     postId: string,
     userId: string
-}[],
-likes: [],
-loginedUserId: string
+  }[],
+  likes: [],
+  loginedUserId: string
 }
 
-export default function Post({id, name, avatar, postTitle, comments, likes, loginedUserId}:PostType) {
-  const [likesCounter, setLikesCounter] = useState(0)
-  const [isLikedSuccess, setIsLikedSuccess] = useState(false)
+export default function Post({ id, name, avatar, postTitle, comments, likes, loginedUserId }: PostType) {
   const queryClient = useQueryClient()
+  const [isLikedSuccess, setIsLikedSuccess] = useState(false)
+  const [likesCounter, setLikesCounter] = useState(0)
 
-  useEffect(() => {
-    const fetchLoginedUser = async () => {
-      const response = await axios.get('/api/auth/getLoginedUser')
-      if (response.status === 200) {
-        console.log('200')
-      } else {
-        console.log('400')
-      }
-      
-    }
-    const loginedUserId = fetchLoginedUser()
-    console.log(loginedUserId)
-  },[])
+  // useEffect(() => {
+
+  //   loginedUserId !== '' && setIsLikedSuccess(true) 
+  // })
 
   useEffect(() => {
     setLikesCounter(likes.length)
@@ -49,12 +40,14 @@ export default function Post({id, name, avatar, postTitle, comments, likes, logi
     })
     console.log('2 useef')
   }, [likes])
+  
+
 
   let toastPostId: string
 
   //create a post
   const { mutate } = useMutation(
-    async () => await axios.post("/api/posts/addLike", {id}),
+    async () => await axios.post("/api/posts/addLike", { id }),
     {
       onError: (error) => {
         error instanceof AxiosError &&
@@ -71,34 +64,34 @@ export default function Post({id, name, avatar, postTitle, comments, likes, logi
 
   const addLike = async (e: React.FormEvent) => {
     e.preventDefault()
-    toastPostId = toast.loading('Your like is adding...', {id: toastPostId})
+    toastPostId = toast.loading('Your like is adding...', { id: toastPostId })
     mutate(likes)
   }
-  
-  
-    return (
-      <div className="bg-white my-8 p-8 rounded-lg">
-        <div className="flex item-center gap-2">
-          <Image
-            className="rounded-full"
-            width={32}
-            height={32}
-            src={avatar}
-            alt="avatar"
-          />
-          <h3 className="font-bold text-gray-700">{name}</h3>
-        </div>
-        <div className="my-8">
-          <p className="brake-all">{postTitle}</p>
-        </div>
-        <div className="flex gap-4 cursor-pointer items-center">
-          <Link href={`/post/${id}`}>
-            <p className="text-sm font-bold text-gray-700">
-              {comments?.length} Comments
-            </p>
-          </Link>
-          <button onClick={addLike} className="flex items-center">{!isLikedSuccess ? <AiOutlineHeart /> : <AiFillHeart color="red"/>}{likesCounter}</button>
-        </div>
+
+
+  return (
+    <div className="bg-white my-8 p-8 rounded-lg">
+      <div className="flex item-center gap-2">
+        <Image
+          className="rounded-full"
+          width={32}
+          height={32}
+          src={avatar}
+          alt="avatar"
+        />
+        <h3 className="font-bold text-gray-700">{name}</h3>
       </div>
-    )
+      <div className="my-8">
+        <p className="brake-all">{postTitle}</p>
+      </div>
+      <div className="flex gap-4 cursor-pointer items-center">
+        <Link href={`/post/${id}`}>
+          <p className="text-sm font-bold text-gray-700">
+            {comments?.length} Comments
+          </p>
+        </Link>
+        <button onClick={addLike} className="flex items-center">{!isLikedSuccess ? <AiOutlineHeart /> : <AiFillHeart color="red" />}{likesCounter}</button>
+      </div>
+    </div>
+  )
 }
