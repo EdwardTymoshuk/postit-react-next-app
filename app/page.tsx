@@ -7,13 +7,11 @@ import Post from './components/Post'
 import { ThreeDots } from 'react-loader-spinner'
 import { PostProps } from './types/PostType'
 
-
-
-
 const allPosts = async () => {
   const loginedUserId = await axios.get('api/auth/getLoginedUser').then(res => res.data)
   const response = await axios.get('api/posts/getPosts')
-  const data = response.data.map(el => Object.assign(el, { 'loginedUserId': loginedUserId }))
+  const data = response.data.map((el:PostProps) => Object.assign(el, { 'loginedUserId': loginedUserId }))
+
   return data
 }
 

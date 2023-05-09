@@ -13,8 +13,8 @@ export default async function handler(
     //Get a current user
     const prismaUser = await prisma.user.findUnique({
       where: {
-        email: session?.user?.email
-      }
+        email: session?.user?.email as string
+      } 
     })
     const userId = prismaUser?.id
     //Get a like

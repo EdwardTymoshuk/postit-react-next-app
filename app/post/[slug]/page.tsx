@@ -34,14 +34,14 @@ export default function PostDetail(url:UrlProps) {
     return (
       <div>
         <Post
-          id={data?.id}
-          name={data?.user.name}
-          avatar={data?.user.image}
-          postTitle={data?.title}
-          comments={data?.comments}
-          likes={data?.likes}
-          loginedUserId={data?.loginedUserId}
-          createdAt={data?.createdAt}
+          id={data?.id!}
+          name={data?.user.name!}
+          avatar={data?.user.image!}
+          postTitle={data?.title!}
+          comments={data?.comments!}
+          likes={data?.likes!}
+          loginedUserId={data?.loginedUserId!}
+          createdAt={data?.createdAt!}
         />
         <AddComment id={data?.id} /> 
         {data?.comments?.map(comment => (

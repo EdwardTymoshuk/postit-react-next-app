@@ -8,8 +8,8 @@ export type PostProps = {
         name: string,
         image: string,
     },
-    comments?: {
-        createdAt?: string,
+    comments: {
+        createdAt: string,
         id: string,
         postId: string,
         userId: string,
@@ -21,7 +21,7 @@ export type PostProps = {
             image: string,
         }
     }[],
-    likes?: {
+    likes: {
         id: string,
         userId: string,
         postId: string

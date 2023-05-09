@@ -13,7 +13,7 @@ export default async function handler (
         //Get a user
         const prismaUser = await prisma.user.findUnique({
             where:{ 
-                email: session?.user?.email
+                email: session?.user?.email as string
             }
         })
         //Add a comment
@@ -22,9 +22,9 @@ export default async function handler (
             if (!title.length) {return res.status(401).json({message: 'Please enter a comment.'})}
             const result = await prisma.comment.create({
               data: {
-                message: title,
-                userId: prismaUser?.id,
-                postId 
+                message: title as string,
+                userId: prismaUser?.id as string,
+                postId
               }
             })
             res.status(200).json(result)

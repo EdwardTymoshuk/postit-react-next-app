@@ -15,7 +15,7 @@ export default async function handler (
         //Get a user
         const prismaUser = await prisma.user.findUnique({
             where:{ 
-                email: session?.user?.email
+                email: session?.user?.email as string
             }  
         })
         const userId = prismaUser?.id
@@ -23,9 +23,9 @@ export default async function handler (
           try {
             const result = await prisma.like.create({
               data: {
-                id: `${userId}_${postId}`,
-                userId,
-                postId 
+                id: `${userId}_${postId}` as string,
+                userId: userId as string,
+                postId: postId as string
               }
             })
             res.status(200).json(result)
