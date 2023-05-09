@@ -44,16 +44,16 @@ export default function AddComments({id}: AddCommentProps) {
         mutate({title, postId: id}) 
     }
     return (
-      <form onSubmit={submitComment} className="my-8">
+      <form onSubmit={submitComment} className="bg-white my-8 p-8 rounded-md">
         <h3>Add a comment</h3>
         <div className="flex flex-col my-2">
-          <input
-            onChange={(e) => setTitle(e.target.value)}
-            value={title}
-            type="text"
-            name="title"
-            className="p-4 text-lg rounded-md my-2"
-          />
+        <textarea
+          onChange={(e) => setTitle(e.target.value)}
+          name="title"
+          value={title}
+          placeholder="What do you think about it?"
+          className="p-4 text-lx rounded-md bg-gray-200 my-2"
+        ></textarea>
         </div>
         <div className={"lex items-center justify-between gap-2"}>
           <p

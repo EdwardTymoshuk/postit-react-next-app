@@ -13,14 +13,15 @@ export default async function handler (
         //Delete a post
           try {
             const postId = req.body
+            console.log(postId)
             const result = await prisma.post.delete({
                 where: { 
-                    id: postId
-                }
+                    id: postId,
+                },
             })
             res.status(200).json(result)
           } catch (err) {
-            res.status(403).json({ err: "Error was occured whilst maling a post." })
+            res.status(403).json({ err: "Error was occured whilst deleting a post." })
           }
         }
     }

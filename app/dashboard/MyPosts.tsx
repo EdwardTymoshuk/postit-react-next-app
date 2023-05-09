@@ -2,6 +2,7 @@
 
 import {useQuery} from '@tanstack/react-query'
 import axios from 'axios'
+import { ThreeDots } from 'react-loader-spinner'
 import { AuthPosts } from '../types/AuthPosts'
 import EditPost from './EditPost'
 
@@ -15,10 +16,20 @@ export default function MyPosts() {
         queryFn: fetchAuthPosts,
         queryKey: ['auth-posts']
     })
-    isLoading && <h1>Posts are loading...</h1>
+    if (isLoading) return <ThreeDots
+    height="80"
+    width="80"
+    radius="9"
+    color="#0d9488"
+    ariaLabel="three-dots-loading"
+    wrapperStyle={{}}
+    wrapperClass="justify-center"
+    visible={true}
+  />
     return (
         <div>
-            {data?.posts.map((post) => <EditPost id={post.id} key={post.id} avatar={data.image} name={data.name} title={post.title} comments={post.comments} />)}
+            {!!data ? data.posts.map((post) => <EditPost id={post.id} key={post.id} avatar={data.image} name={data.name} title={post.title} comments={post.comments} />) :
+                    <h1>You don't have any posts yet 😔</h1>}
         </div>
     )
 }

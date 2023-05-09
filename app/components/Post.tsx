@@ -20,10 +20,11 @@ type PostType = {
     userId: string
   }[],
   likes: [],
-  loginedUserId: string
+  loginedUserId: string,
+  createdAt: string
 }
 
-export default function Post({ id, name, avatar, postTitle, comments, likes, loginedUserId }: PostType) {
+export default function Post({ id, name, avatar, postTitle, comments, likes, loginedUserId, createdAt }: PostType) {
   const queryClient = useQueryClient()
   const [isLikedSuccess, setIsLikedSuccess] = useState(false)
   const [likesCounter, setLikesCounter] = useState(0)
@@ -71,7 +72,8 @@ export default function Post({ id, name, avatar, postTitle, comments, likes, log
 
   return (
     <div className="bg-white my-8 p-8 rounded-lg">
-      <div className="flex item-center gap-2">
+      <div className="flex items-center justify-between">
+        <div className="inline-flex items-center gap-2">
         <Image
           className="rounded-full"
           width={32}
@@ -80,6 +82,10 @@ export default function Post({ id, name, avatar, postTitle, comments, likes, log
           alt="avatar"
         />
         <h3 className="font-bold text-gray-700">{name}</h3>
+        </div>
+        <div className="text-gray-500 text-sm">
+        <p>{createdAt?.split('T')[0]+' '+createdAt?.split('T')[1].split('.')[0]}</p>
+        </div>
       </div>
       <div className="my-8">
         <p className="brake-all">{postTitle}</p>

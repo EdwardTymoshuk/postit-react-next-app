@@ -37,7 +37,7 @@ export default async function handler (
           } catch (err) {
             res
               .status(403)
-              .json({ err: "Error was occured whilst maling a post." })
+              .json({ err: "Error was occured whilst making a post." })
           }
         }
     }
