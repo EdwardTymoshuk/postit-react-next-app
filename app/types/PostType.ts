@@ -21,6 +21,11 @@ export type PostProps = {
             image: string,
         }
     }[],
-    likes?: [],
-    loginedUserId: string
+    likes?: {
+        id: string,
+        userId: string,
+        postId: string
+    }[],
+    loginedUserId: string,
+    createdAt: string
 }

@@ -13,7 +13,6 @@ export default async function handler (
         //Delete a post
           try {
             const postId = req.body
-            console.log(postId)
             const result = await prisma.post.delete({
                 where: { 
                     id: postId,

@@ -95,3 +95,21 @@ a {
   text-decoration: none;
 }
 
+svg {
+  pointer-events: none;
+}
+
+@keyframes liked {
+  0% {
+    transform: scale(.8);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.heart.liked {
+  animation: liked 1.2s ease;
+}

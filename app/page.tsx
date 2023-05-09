@@ -4,10 +4,8 @@ import AddPost from './components/AddPost'
 import axios from 'axios'
 import { useQuery } from '@tanstack/react-query'
 import Post from './components/Post'
-import { PostType } from './types/Posts'
-import Link from 'next/link'
-import { useEffect, useState } from 'react'
 import { ThreeDots } from 'react-loader-spinner'
+import { PostProps } from './types/PostType'
 
 
 
@@ -20,7 +18,7 @@ const allPosts = async () => {
 }
 
 export default function Home() {
-  const { data, error, isLoading } = useQuery<PostType[]>({
+  const { data, error, isLoading } = useQuery<PostProps[]>({
     queryFn: allPosts,
     queryKey: ['posts']
   })

@@ -19,7 +19,11 @@ type PostType = {
     postId: string,
     userId: string
   }[],
-  likes: [],
+  likes: {
+    id: string,
+    userId: string,
+    postId: string
+  }[],
   loginedUserId: string,
   createdAt: string
 }
@@ -29,25 +33,27 @@ export default function Post({ id, name, avatar, postTitle, comments, likes, log
   const [isLikedSuccess, setIsLikedSuccess] = useState(false)
   const [likesCounter, setLikesCounter] = useState(0)
 
-  // useEffect(() => {
+  let toastPostId: string
 
-  //   loginedUserId !== '' && setIsLikedSuccess(true) 
-  // })
+  const toggleLike = (e:React.FormEvent) => {
+    if (likes.filter(like => like.userId === loginedUserId).length > 0) {
+       removeLike(e)
+    } else {
+      addLike(e)
+    }
+  }
+
 
   useEffect(() => {
     setLikesCounter(likes.length)
     likes.forEach(value => {
       !!loginedUserId && value.userId === loginedUserId && setIsLikedSuccess(true)
     })
-    console.log('2 useef')
   }, [likes])
   
 
-
-  let toastPostId: string
-
   //create a post
-  const { mutate } = useMutation(
+  const addLikeMutate = useMutation(
     async () => await axios.post("/api/posts/addLike", { id }),
     {
       onError: (error) => {
@@ -61,13 +67,39 @@ export default function Post({ id, name, avatar, postTitle, comments, likes, log
       },
     }
   )
+  const removeLikeMutate = useMutation(
+    async () => await axios.delete("/api/posts/removeLike", { data:id }),
+    {
+      onError: (error) => {
+        error instanceof AxiosError &&
+          toast.error(error?.response?.data.message, { id: toastPostId })
+      },
+      onSuccess: (data) => {
+        toast.success("Like has been removed!", { id: toastPostId })
+        queryClient.invalidateQueries(["posts"])
+        setIsLikedSuccess(false)
+      },
+    }
+  )
 
 
   const addLike = async (e: React.FormEvent) => {
     e.preventDefault()
+    const button:HTMLElement = e.target as HTMLButtonElement
+    if (button.classList.contains("liked")) {
+      button.classList.remove("liked");
+    } else {
+      button.classList.add("liked");
+    }
     toastPostId = toast.loading('Your like is adding...', { id: toastPostId })
-    mutate(likes)
+    addLikeMutate.mutate()
   }
+
+  const removeLike = async (e: React.FormEvent) => {
+    e.preventDefault()
+    toastPostId = toast.loading('Your like is removing...', { id: toastPostId })
+    removeLikeMutate.mutate()
+  } 
 
 
   return (
@@ -90,13 +122,13 @@ export default function Post({ id, name, avatar, postTitle, comments, likes, log
       <div className="my-8">
         <p className="brake-all">{postTitle}</p>
       </div>
-      <div className="flex gap-4 cursor-pointer items-center">
+      <div className="flex gap-4 cursor-pointer items-center stage">
         <Link href={`/post/${id}`}>
           <p className="text-sm font-bold text-gray-700">
             {comments?.length} Comments
           </p>
         </Link>
-        <button onClick={addLike} className="flex items-center">{!isLikedSuccess ? <AiOutlineHeart /> : <AiFillHeart color="red" />}{likesCounter}</button>
+        <button onClick={toggleLike} className="flex items-center heart">{!isLikedSuccess ? <AiOutlineHeart /> : <AiFillHeart color="red" />}{likesCounter}</button>
       </div>
     </div>
   )

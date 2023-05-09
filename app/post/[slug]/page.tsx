@@ -4,7 +4,7 @@ import Post from "../../components/Post"
 import {useQuery} from '@tanstack/react-query'
 import axios from 'axios'
 import { UrlProps } from "../../types/UrlProps"
-import { PostProps } from "../../types/PostProps"
+import { PostProps } from "../../types/PostType"
 import AddComment from "../../components/AddComment"
 import Image from "next/image"
 import { ThreeDots } from "react-loader-spinner"
@@ -41,6 +41,7 @@ export default function PostDetail(url:UrlProps) {
           comments={data?.comments}
           likes={data?.likes}
           loginedUserId={data?.loginedUserId}
+          createdAt={data?.createdAt}
         />
         <AddComment id={data?.id} /> 
         {data?.comments?.map(comment => (
