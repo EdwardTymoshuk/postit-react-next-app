@@ -18,7 +18,7 @@ export const authOptions = {
       response_type: "code"
     }
   },
-  secret: process.env.JWT_SECRET,
+  secret: process.env.NEXT_PUBLIC_SECRET,
 }
 
 export default NextAuth(authOptions) 
