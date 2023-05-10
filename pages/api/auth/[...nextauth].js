@@ -17,7 +17,8 @@ export const authOptions = {
       access_type: "offline",
       response_type: "code"
     }
-  }
+  },
+  secret: process.env.JWT_SECRET,
 }
 
 export default NextAuth(authOptions) 
