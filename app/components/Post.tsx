@@ -31,7 +31,6 @@ type PostType = {
 export default function Post({ id, name, avatar, postTitle, comments, likes, loginedUserId, createdAt }: PostType) {
   const queryClient = useQueryClient()
   const [isLikedSuccess, setIsLikedSuccess] = useState(false)
-  const [likesCounter, setLikesCounter] = useState(0)
 
   let toastPostId: string
 
@@ -43,9 +42,7 @@ export default function Post({ id, name, avatar, postTitle, comments, likes, log
     }
   }
 
-
   useEffect(() => {
-    setLikesCounter(likes.length)
     likes.forEach(value => {
       !!loginedUserId && value.userId === loginedUserId && setIsLikedSuccess(true)
     })
@@ -128,7 +125,7 @@ export default function Post({ id, name, avatar, postTitle, comments, likes, log
             {comments?.length} Comments
           </p>
         </Link>
-        <button onClick={toggleLike} className="flex items-center heart">{!isLikedSuccess ? <AiOutlineHeart /> : <AiFillHeart color="red" />}{likesCounter}</button>
+        <button onClick={toggleLike} className="flex items-center heart">{!isLikedSuccess ? <AiOutlineHeart /> : <AiFillHeart color="red" />}{likes.length}</button>
       </div>
     </div>
   )
