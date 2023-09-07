@@ -1,38 +1,39 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# PostIt - React Next.js App
 
-## Getting Started
+## Overview
+PostIt is a simple web application built with React and Next.js that allows users to create and share text-based notes. It provides an easy way to jot down thoughts, ideas, and reminders in a digital format. This project is designed to be minimalistic, user-friendly, and responsive.
 
-First, run the development server:
+![Project Screenshot](public/project-postit.jpg)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Features
+- **Create Notes:** Easily create new notes with a title and content.
+- **Edit and Delete:** Edit or delete existing notes.
+- **Add and remove likes to post:** Like or unlike posts.
+- **Responsive Design:** Works seamlessly on both desktop and mobile devices.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Installation
+1. Clone this repository: `git clone https://github.com/EdwardTymoshuk/postit-react-next-app.git`
+2. Navigate to the project directory: `cd postit-react-next-app`
+3. Install dependencies: `npm install`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Usage
+- Start the development server: `npm run dev`
+- Access the application in your browser at `http://localhost:3000`
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Technologies Used
+- React: A JavaScript library for building user interfaces.
+- Next.js: A framework for building React applications.
+- Styled-components: A CSS-in-JS library for styling components.
+- TypeScript: A strongly typed programming language that builds on JavaScript.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Contributing
+Contributions are welcome! If you'd like to contribute to this project, please follow the standard GitHub fork and pull request process.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Contact
+For any inquiries or feedback, please contact the project owner:
+- Eduard Tymoshuk
+- Email: [eduard.tymoshuk@gmail.com](mailto:eduard.tymoshuk@gmail.com)
+- GitHub: [https://github.com/EdwardTymoshuk](https://github.com/EdwardTymoshuk)
